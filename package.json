@@ -1,0 +1,44 @@
+{
+  "name": "agent-city-live",
+  "version": "0.1.0",
+  "description": "Live 3D skyline of every agent building tools",
+  "private": false,
+  "type": "module",
+  "main": "src/server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon src/server/index.js",
+    "client": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@react-three/fiber": "^8.13.5",
+    "@react-three/drei": "^9.53.1",
+    "three": "^0.158.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "nodemon": "^3.0.1",
+    "vite": "^5.0.10",
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.2.2",
+    "@types/node": "^20.6.3",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<YOUR_GITHUB_USERNAME>/agent-city-live.git"
+  },
+  "bugs": {
+    "url": "https://github.com/<YOUR_GITHUB_USERNAME>/agent-city-live/issues"
+  },
+  "homepage": "https://github.com/<YOUR_GITHUB_USERNAME>/agent-city-live#readme",
+  "author": "",
+  "license": "MIT"
+}
