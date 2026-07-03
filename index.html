@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agent City Live – 3D Skyline of Agent Building Tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: #0a0a0a;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #fff;
+        }
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            max-width: 300px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">Loading Agent City…</div>
+    <div id="info">
+        <h2>Agent City Live</h2>
+        <p>Every building represents an AI agent. Height = number of tools, color = category.</p>
+        <p>Use mouse or touch to orbit, zoom, and pan.</p>
+    </div>
+    <script type="module">
+        import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js";
+        import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.166.1/examples/jsm/controls/OrbitControls.js";
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0a0a);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(50, 30, 80);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.1;
+
+        // Lights
+        const ambient = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambient);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(100, 100, 50);
+        scene.add(dirLight);
+
+        // Ground plane
+        const groundGeo = new THREE.PlaneGeometry(500, 500);
+        const groundMat = new THREE.MeshPhongMaterial({ color: 0x222222 });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        scene.add(ground);
+
+        // Helper to map category to color
+        const categoryColors = {
+            "communication": 0x1f77b4,
+            "analysis": 0xff7f0e,
+            "automation": 0x2ca02c,
+            "creative": 0xd62728,
+            "default": 0x7f7f7f
+        };
+
+        // Load agents data
+        async function loadAgents() {
+            try {
+                // Replace this URL with the actual location of your agents JSON
+                const response = await fetch('agents.json');
+                const agents = await response.json();
+                buildCity(agents);
+            } catch (e) {
+                console.error("Failed to load agents data:", e);
+                document.getElementById('loading').textContent = "Failed to load data.";
+            }
+        }
+
+        function buildCity(agents) {
+            const spacing = 4;
+            const maxHeight = 50;
+            let index = 0;
+
+            agents.forEach(agent => {
+                const toolsCount = Array.isArray(agent.tools) ? agent.tools.length : 0;
+                const height = Math.min(toolsCount, maxHeight) + 1; // ensure at least 1
+
+                const geometry = new THREE.BoxGeometry(3, height, 3);
+                const color = categoryColors[agent.category] || categoryColors["default"];
+                const material = new THREE.MeshPhongMaterial({ color });
+
+                const building = new THREE.Mesh(geometry, material);
+                building.position.x = (index % 20) * spacing - 40;
+                building.position.z = Math.floor(index / 20) * spacing - 40;
+                building.position.y = height / 2;
+
+                // Optional: add simple name label as 2D overlay later
+
+                scene.add(building);
+                index++;
+            });
+
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Responsive handling
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        animate();
+        loadAgents();
+    </script>
+</body>
+</html>
