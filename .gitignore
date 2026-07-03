@@ -1,0 +1,126 @@
+# OS generated files #
+#####################
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*~
+
+# Python #
+##########
+__pycache__/
+*.py[cod]
+*$py.class
+# Virtual env #
+################
+env/
+venv/
+ENV/
+.venv/
+ENV/
+*.env
+*.venv
+# Distribution #
+#################
+build/
+dist/
+*.egg-info/
+*.egg
+.Python
+develop-eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.manifest
+*.spec
+
+# Installer logs #
+##################
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage #
+########################
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook #
+####################
+.ipynb_checkpoints
+
+# VS Code #
+###########
+.vscode/
+*.code-workspace
+
+# Node.js #
+###########
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+dist/
+.tmp/
+
+# IDEs #
+########
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Logs #
+########
+*.log
+
+# Secrets #
+############
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Binary / compiled #
+#####################
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Blender / 3D assets #
+#######################
+*.blend1
+*.blend2
+
+# Temporary files #
+####################
+*.tmp
+tmp/
+temp/
+.cache
+
+# Docker #
+##########
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
